@@ -16,9 +16,9 @@ app.use((req, res) => res.status(404).send('Ruta no encontrada'));
 
 // En tu compu levantamos el servidor. En Vercel no hace falta:
 // Vercel toma la app exportada y la ejecuta por su cuenta.
-if (!process.env.VERCEL) {
-  const PORT = process.env.PORT || 3000;
-  app.listen(PORT, () => console.log('Tienda en http://localhost:' + PORT));
-}
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+});
 
 module.exports = app;
