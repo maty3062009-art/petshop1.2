@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff8f1">
+  <meta name="description" content="Pet Shop: alimento, juguetes y cuidado para perros y gatos. Todo para tu mascota, con mucho amor.">
+  <title>Pet Shop · Todo para tu mascota</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <header class="barra">
+    <a class="marca" href="/" aria-label="Pet Shop, inicio">
+      <img class="marca-logo" src="/images/logo.jpg" alt="Logo Pet Shop: Todo para tu mascota">
+      <span class="marca-texto"><strong>Pet Shop</strong><small>Todo para tu mascota</small></span>
+    </a>
+    <div class="sesion">
+      <span id="saludo"></span>
+      <button id="btn-ingresar" class="btn btn-claro" onclick="abrirModal()">Ingresar</button>
+      <button id="btn-salir" class="btn btn-claro oculto" onclick="cerrarSesion()">Salir</button>
+      <button id="btn-pedidos" class="btn btn-claro oculto" onclick="verMisPedidos()">Mis pedidos</button>
+      <button id="btn-admin" class="btn btn-claro oculto" onclick="alternarAdmin()">Administrar</button>
+      <button class="btn btn-carrito" onclick="alternarCarrito()">
+        Carrito <span id="contador" class="contador">0</span>
+      </button>
+    </div>
+  </header>
+
+  <div id="mensaje" class="mensaje oculto"></div>
+
+  <main class="contenido">
+    <section class="bienvenida">
+      <span class="bienvenida-etiqueta">🐾 Para los que más querés</span>
+      <h2>Todo para tu mascota,<br><span>con mucho amor.</span></h2>
+      <p>Alimento, juguetes y cuidados para hacer felices a perros y gatos.</p>
+    </section>
+    <nav id="categorias" class="categorias"></nav>
+    <label class="buscador-contenedor" for="buscador">
+      <span>Buscar productos</span>
+      <input id="buscador" class="buscador" type="search" placeholder="Nombre del producto..." oninput="buscarProductos(this.value)">
+    </label>
+    <section id="productos" class="grilla">
+      <p class="vacio">Cargando productos...</p>
+    </section>
+  </main>
+
+  <!-- CARRITO: panel lateral -->
+  <aside id="carrito" class="carrito oculto">
+    <div class="carrito-cabecera">
+      <h2>Tu carrito</h2>
+      <button class="btn-cerrar" onclick="alternarCarrito()">×</button>
+    </div>
+    <ul id="carrito-lista" class="carrito-lista"></ul>
+    <div class="carrito-pie">
+      <p>Total estimado: <strong id="carrito-total">$0</strong></p>
+      <button class="btn btn-principal" onclick="comprar()">Comprar</button>
+    </div>
+  </aside>
+
+  <aside id="panel-pedidos" class="panel-lateral oculto">
+    <div class="carrito-cabecera">
+      <h2>Mis pedidos</h2>
+      <button class="btn-cerrar" onclick="cerrarPanel('panel-pedidos')">×</button>
+    </div>
+    <div id="pedidos-lista" class="panel-contenido"></div>
+  </aside>
+
+  <aside id="panel-admin" class="panel-lateral oculto">
+    <div class="carrito-cabecera">
+      <h2>Administrar productos</h2>
+      <button class="btn-cerrar" onclick="cerrarPanel('panel-admin')">×</button>
+    </div>
+    <div class="panel-contenido">
+      <form id="form-producto" onsubmit="guardarProducto(event)">
+        <h3 id="form-producto-titulo">Nuevo producto</h3>
+        <input id="admin-nombre" type="text" maxlength="120" placeholder="Nombre" required>
+        <textarea id="admin-descripcion" placeholder="Descripción"></textarea>
+        <input id="admin-precio" type="number" min="0" step="0.01" placeholder="Precio" required>
+        <input id="admin-stock" type="number" min="0" step="1" placeholder="Stock" required>
+        <input id="admin-imagen" type="url" placeholder="URL de imagen">
+        <input id="admin-categoria" type="number" min="1" step="1" placeholder="ID de categoría">
+        <button class="btn btn-principal" type="submit">Guardar producto</button>
+        <button id="admin-cancelar" class="btn btn-secundario oculto" type="button" onclick="limpiarFormularioProducto()">Cancelar edición</button>
+      </form>
+      <div id="admin-productos" class="admin-productos"></div>
+    </div>
+  </aside>
+
+  <!-- LOGIN / REGISTRO: ventana modal -->
+  <div id="modal" class="modal oculto">
+    <div class="modal-caja">
+      <button class="btn-cerrar" onclick="cerrarModal()">×</button>
+
+      <form id="form-login" onsubmit="iniciarSesion(event)">
+        <h2>Ingresar</h2>
+        <input id="login-email" type="email" placeholder="Email" required>
+        <input id="login-password" type="password" placeholder="Contraseña" required>
+        <button class="btn btn-principal" type="submit">Ingresar</button>
+        <p class="cambiar">¿No tenés cuenta? <a href="#" onclick="mostrarRegistro(true)">Registrate</a></p>
+      </form>
+
+      <form id="form-registro" class="oculto" onsubmit="registrar(event)">
+        <h2>Crear cuenta</h2>
+        <input id="reg-nombre" type="text" placeholder="Nombre" required>
+        <input id="reg-email" type="email" placeholder="Email" required>
+        <input id="reg-password" type="password" placeholder="Contraseña (mínimo 6)" minlength="6" required>
+        <button class="btn btn-principal" type="submit">Registrarme</button>
+        <p class="cambiar">¿Ya tenés cuenta? <a href="#" onclick="mostrarRegistro(false)">Ingresá</a></p>
+      </form>
+    </div>
+  </div>
+
+  <footer class="pie-pagina">
+    <img src="/images/logo.jpg" alt="" aria-hidden="true">
+    <p>Pet Shop · Todo para tu mascota <span>♥</span></p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
